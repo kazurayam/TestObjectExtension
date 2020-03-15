@@ -1,20 +1,68 @@
 plugins {
-  id 'java'
-  id "com.katalon.gradle-plugin" version "0.0.7"
+    id 'java'
+    id 'groovy'
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
+    id "com.katalon.gradle-plugin" version "0.0.7"
+}
+
+group = 'com.kazurayam.ks'
+jar.archiveBaseName = "testobjectextension"
+version = '0.1.0'
+
+ext {
+    groovyVersion   = '2.4.7'
+}
+
+configurations {
+    generateDocs
+
+    implementation.exclude group: 'org.seleniumhq.selenium'
+    implementation.exclude group: 'commons-io'
+    implementation.exclude group: 'com.google.code.gson'
+    implementation.exclude group: 'org.hamcrest'
+    implementation.exclude group: 'junit'
+    implementation.exclude group: 'org.mockito'
 }
 
 repositories {
-  mavenCentral()
+    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-  // sample dependencies
-  // rest-assured
-  // compile 'io.rest-assured:rest-assured:3.2.0'
-  // JsonPath
-  // compile 'io.rest-assured:json-path:3.2.0'
-  // XmlPath
-  // compile 'io.rest-assured:json-path:3.2.0'
-  // JSON Schema Validation
-  // compile 'io.rest-assured:json-schema-validator:3.2.0'
+    // https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot
+    implementation group: 'ru.yandex.qatools.ashot', name: 'ashot', version: '1.5.4'
+
+    generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['Keywords', 'Include/scripts/groovy']
+            srcDir 'Libs'
+        }
+    }
+}
+
+shadowJar {
+    exclude 'Temp*.class'
+}
+
+katalon {
+    dependencyPrefix = "com.kazurayam"
+    minimize = false
+}
+
+task groovydoc(type: Groovydoc, overwrite:true) {
+    source = sourceSets.main.groovy
+    classpath = configurations.compileClasspath
+    groovyClasspath = project.configurations.generateDocs
+    include 'com/kazurayam/ksbackyard/*'
+    exclude '**/*Test.groovy'
+}
+task publishGroovydoc(type: Copy) {
+    from 'build/docs/groovydoc'
+    into 'docs/api'
+}
+groovydoc.finalizedBy publishGroovydoc
