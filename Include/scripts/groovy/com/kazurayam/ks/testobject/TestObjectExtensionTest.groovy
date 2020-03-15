@@ -1,4 +1,4 @@
-package com.kazurayam.ksbackyard
+package com.kazurayam.ks.testobject
 
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static org.hamcrest.CoreMatchers.*
@@ -14,14 +14,14 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.testobject.TestObject
 
 @RunWith(JUnit4.class)
-public class TestObjectSupportTest {
+public class TestObjectExtensionTest {
 
 	@Test
 	void test_toJson() {
 		WebUI.comment("test_toJson")
 		TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC')
 		assertNotNull(tObj)
-		String json = TestObjectSupport.toJson(tObj)
+		String json = TestObjectExtension.toJson(tObj)
 		println json
 		assertTrue(json.length() > 0)
 		assertTrue("objectId is missing", json.contains('objectId'))
@@ -32,7 +32,7 @@ public class TestObjectSupportTest {
 		WebUI.comment("test_prettyPrint_BASIC")
 		TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC')
 		assertNotNull(tObj)
-		String json = TestObjectSupport.prettyPrint(tObj)
+		String json = TestObjectExtension.prettyPrint(tObj)
 		println json
 		assertTrue(json.length() > 0)
 		//assertTrue("objectId is missing", json.contains('objectId'))
@@ -43,7 +43,7 @@ public class TestObjectSupportTest {
 		WebUI.comment("test_prettyPrint_XPATH")
 		TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_XPATH')
 		assertNotNull(tObj)
-		String json = TestObjectSupport.prettyPrint(tObj)
+		String json = TestObjectExtension.prettyPrint(tObj)
 		println json
 		assertTrue(json.length() > 0)
 		//assertTrue("objectId is missing", json.contains('objectId'))
@@ -54,7 +54,7 @@ public class TestObjectSupportTest {
 		WebUI.comment("test_prettyPrint_CSS")
 		TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_CSS')
 		assertNotNull(tObj)
-		String json = TestObjectSupport.prettyPrint(tObj)
+		String json = TestObjectExtension.prettyPrint(tObj)
 		println json
 		assertTrue(json.length() > 0)
 		//assertTrue("objectId is missing", json.contains('objectId'))
@@ -67,7 +67,7 @@ public class TestObjectSupportTest {
 		WebUI.comment("test_toBy_BASIC")
 		TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC')
 		//println ">>> " + TestObjectSupport.prettyPrint(tObj)
-		By by = TestObjectSupport.toBy(tObj)
+		By by = TestObjectExtension.toBy(tObj)
 		println by
 		assertTrue(by.toString().contains("//a[@id = 'btn-make-appointment']"))
 	}
@@ -76,7 +76,7 @@ public class TestObjectSupportTest {
 	void test_toBy_CSS() {
 		WebUI.comment("test_toBy_CSS")
 		TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_CSS')
-		By by = TestObjectSupport.toBy(tObj)
+		By by = TestObjectExtension.toBy(tObj)
 		println by
 		assertTrue(by.toString().contains("#btn-make-appointment"))
 	}
@@ -85,7 +85,7 @@ public class TestObjectSupportTest {
 	void test_toBy_XPATH() {
 		WebUI.comment("test_toBy_XPATH")
 		TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_XPATH')
-		By by = TestObjectSupport.toBy(tObj)
+		By by = TestObjectExtension.toBy(tObj)
 		println by
 		assertTrue(by.toString().contains("//a[@id='btn-make-appointment']"))
 	}
@@ -97,7 +97,7 @@ public class TestObjectSupportTest {
 		toList.add(findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC'))
 		toList.add(findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_CSS'))
 		toList.add(findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_XPATH'))
-		List<By> byList = TestObjectSupport.toBy(toList)
+		List<By> byList = TestObjectExtension.toBy(toList)
 		println byList
 		assertEquals(3, byList.size())
 	}

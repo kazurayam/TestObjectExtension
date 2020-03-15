@@ -1,4 +1,4 @@
-package com.kazurayam.ksbackyard
+package com.kazurayam.ks.testobject
 
 import org.openqa.selenium.By
 import com.kms.katalon.core.annotation.Keyword
@@ -14,7 +14,7 @@ import groovy.json.JsonOutput
  *
  * @author kazurayam
  */
-class TestObjectSupport {
+class TestObjectExtension {
 
 	/**
 	 * convert a TestObject object into a String in JSON format.
@@ -73,7 +73,7 @@ class TestObjectSupport {
 	static List<By> toBy(List<TestObject> testObjectList) {
 		List<By> list = new ArrayList<By>()
 		for (TestObject to : testObjectList) {
-			list.add(TestObjectSupport.toBy(to))
+			list.add(TestObjectExtension.toBy(to))
 		}
 		return list
 	}
