@@ -1,5 +1,196 @@
 TestObject Extension for Katalon Studio
 ====
 
-This is a small Katalon Studio project for demonstration purpose.
-You can the zip from the [Releases]()
+This is a small [Katalon Studio](https://www.katalon.com/) project for demonstration purpose.
+You can download the zip from the [Releases](https://github.com/kazurayam/TestObjectExtension/releases) page
+and open it with Katalon Studio on your PC.
+
+This project was developed using v7.2.1.
+
+# Problem to solve
+
+Once I had a dicusssion in the Katalon Forum where I hacked Katalon Studio concerning TestObject.
+
+- [Cannot find elements when XPath expression is null](https://forum.katalon.com/t/cannot-find-elements-when-xpath-expression-is-null/13840)
+
+In the end it was found that Katalon Studio v5.7.1 had a small bug; and later the problem was fixed.
+
+In the research I had to look at the internal of `com.kms.katalon.core.testobject.TestObject` class.
+I needed to debug-print every details of a `TestObject` instance.
+I needed to see all properties (name-value pairs).
+I wanted to pretty-print a `TestObject` in JSON format.
+I wanted to make it as easy as possible to print a `TestOject` in JSON.
+
+Also I remembered that quite often I need to convert a Katalon's `TestObject` into Selenium WebDriver's `By` object. 
+I wanted to make it as easy as possible to create a `By` object out of a `TestObject`.
+
+# Solution proposed
+
+I developed a utility class `com.kazurayam.ks.testobject.TestObjectExntion`. 
+It employs [Groovy's Runtime Metaprogramming](https://groovy-lang.org/metaprogramming.html) technique.
+With it a test case script can extend the `com.kms.katalon.core.testobject.TestObject` class
+to have a few custom methods runtime.
+
+# Description
+
+## How to run the demo
+
+1. Open this project with your local Katalon Studio
+2. Open `Test Cases/main/demo1`
+3. Just run `demo1`
+
+## How the demo code looks like
+
+See the source of `TestObjectExteion` keyword located [here](./Keywords/com/kazurayam/ks/testobject/)
+
+Here I would dectate the code fragments as it goes
+
+You need to import the class:
+```
+import com.kazurayam.ks.testobject.TestObjectExtension
+```
+
+### apply()
+
+We extends TestObject class by calling `TestObjectExteion#apply()` method:
+```
+CustomKeywords."com.kazurayam.ks.testobject.TestObjectExtension.apply"()
+```
+
+Or simply you can write:
+```
+TestObjectExtension.apply()
+```
+
+### toString()
+
+I create a `TestObject` object as a test fixture:
+```
+TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC')
+```
+
+TestObject class originally implements `toString()` method:
+```
+WebUI.comment("tObj.toString(): " + tObj.toString())
+```
+This emits this output:
+```
+tObj.toString(): TestObject - 'Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC'
+```
+
+I am afraid, this output is not useful for hacking purposes.
+
+### toJson()
+
+By invoking `TestObjectExtension.apply()` the `TestObject` class now implements `toJson()` method: 
+```
+WebUI.comment("#toJson()\n" + tObj.toJson())
+```
+This emits this output:
+```
+{"cachedWebElement":null,"objectId":"Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC","parentObjectShadowRoot":false,"properties":[{"active":true,"value":"a","condition":"EQUALS","name":"tag"},{"active":true,"value":"btn-make-appointment","condition":"EQUALS","name":"id"},{"active":false,"value":"./profile.php#login","condition":"EQUALS","name":"href"},{"active":false,"value":"btn btn-dark btn-lg","condition":"EQUALS","name":"class"},{"active":false,"value":"Make Appointment","condition":"EQUALS","name":"text"},{"active":false,"value":"id(\"btn-make-appointment\")","condition":"EQUALS","name":"xpath"}],"imagePath":null,"selectorMethod":"BASIC","selectorCollection":{"BASIC":"//a[@id = 'btn-make-appointment']"},"useRelativeImagePath":false,"parentObject":null,"xpaths":[],"activeProperties":[{"active":true,"value":"a","condition":"EQUALS","name":"tag"},{"active":true,"value":"btn-make-appointment","condition":"EQUALS","name":"id"}],"activeXpaths":[]}
+```
+
+A long long line of text in JSON format. It's ugly, not very useful.
+
+### prettyPrint()
+
+The `TestObject` class now implements `prettyPrint()` method:
+```
+WebUI.comment("#prettyPrint()\n" + tObj.prettyPrint())
+```
+This emits this output:
+```
+{
+    "cachedWebElement": null,
+    "objectId": "Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC",
+    "parentObjectShadowRoot": false,
+    "properties": [
+        {
+            "active": true,
+            "value": "a",
+            "condition": "EQUALS",
+            "name": "tag"
+        },
+        {
+            "active": true,
+            "value": "btn-make-appointment",
+            "condition": "EQUALS",
+            "name": "id"
+        },
+        {
+            "active": false,
+            "value": "./profile.php#login",
+            "condition": "EQUALS",
+            "name": "href"
+        },
+        {
+            "active": false,
+            "value": "btn btn-dark btn-lg",
+            "condition": "EQUALS",
+            "name": "class"
+        },
+        {
+            "active": false,
+            "value": "Make Appointment",
+            "condition": "EQUALS",
+            "name": "text"
+        },
+        {
+            "active": false,
+            "value": "id(\"btn-make-appointment\")",
+            "condition": "EQUALS",
+            "name": "xpath"
+        }
+    ],
+    "imagePath": null,
+    "selectorMethod": "BASIC",
+    "selectorCollection": {
+        "BASIC": "//a[@id = 'btn-make-appointment']"
+    },
+    "useRelativeImagePath": false,
+    "parentObject": null,
+    "xpaths": [
+        
+    ],
+    "activeProperties": [
+        {
+            "active": true,
+            "value": "a",
+            "condition": "EQUALS",
+            "name": "tag"
+        },
+        {
+            "active": true,
+            "value": "btn-make-appointment",
+            "condition": "EQUALS",
+            "name": "id"
+        }
+    ],
+    "activeXpaths": [
+        
+    ]
+}
+```
+Ok, this is what I wanted to see.
+
+### toBy()
+
+The `TestObject` class now also has `toBy()` method with which you can convert
+TestObject into a WebDriver's By object.
+```
+By by = tObj.toBy()
+```
+
+Simple is the best.
+
+## How to use TestObjectExtension in your own project
+
+In the [Releases](https://github.com/kazurayam/TestObjectExtension/releases) page
+you can find jar file that contains the compiled class file of `TestObjectExtension`.
+You can download it and locate it into the `Drivers` directory of your own Katalon Studio project
+as described in the document [External Libraries](https://docs.katalon.com/katalon-studio/docs/external-libraries.html)
+
+
+
+

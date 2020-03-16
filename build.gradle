@@ -30,9 +30,6 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot
-    implementation group: 'ru.yandex.qatools.ashot', name: 'ashot', version: '1.5.4'
-
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
 
@@ -58,7 +55,7 @@ task groovydoc(type: Groovydoc, overwrite:true) {
     source = sourceSets.main.groovy
     classpath = configurations.compileClasspath
     groovyClasspath = project.configurations.generateDocs
-    include 'com/kazurayam/ksbackyard/*'
+    include 'com/kazurayam/**'
     exclude '**/*Test.groovy'
 }
 task publishGroovydoc(type: Copy) {

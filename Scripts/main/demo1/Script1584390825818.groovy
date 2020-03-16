@@ -15,6 +15,9 @@ CustomKeywords."com.kazurayam.ks.testobject.TestObjectExtension.apply"()
 // a fixture
 TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC')
 
+// I found that TestObject#toString() method is not very useful
+WebUI.comment("tObj.toString(): " + tObj.toString())
+
 // TestObject class now implements toJson() method 
 WebUI.comment("#toJson()\n" + tObj.toJson())
 
