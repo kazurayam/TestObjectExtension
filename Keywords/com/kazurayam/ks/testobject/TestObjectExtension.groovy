@@ -31,8 +31,8 @@ class TestObjectExtension {
 					return toBy(delegate)
 					break
 				default :
-					// just do what TestObject is designed to do
-					def result 
+				// just do what TestObject is designed to do
+					def result
 					try {
 						result = delegate.metaClass.getMetaMethod(name, args).invoke(delegate, args)
 					} catch (Exception e) {
@@ -43,7 +43,7 @@ class TestObjectExtension {
 			}
 		}
 	}
-	
+
 	/**
 	 * Convert a TestObject object into a String in JSON format.
 	 * Both of Active properties and Non-active properties of TestObject are printed.

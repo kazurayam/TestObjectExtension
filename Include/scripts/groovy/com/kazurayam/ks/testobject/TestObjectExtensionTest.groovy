@@ -16,7 +16,7 @@ import groovy.json.JsonOutput
 
 @RunWith(JUnit4.class)
 public class TestObjectExtensionTest {
-	
+
 	@Test
 	void test_apply_toJson() {
 		// setup:
@@ -31,7 +31,7 @@ public class TestObjectExtensionTest {
 		assertTrue(json.length() > 0)
 		assertTrue("objectId is missing", json.contains('objectId'))
 	}
-	
+
 	@Test
 	void test_apply_prettyPrint() {
 		// setup:
@@ -46,7 +46,7 @@ public class TestObjectExtensionTest {
 		assertTrue(json.length() > 0)
 		assertTrue("objectId is missing", json.contains('objectId'))
 	}
-	
+
 	@Test
 	void test_toJson() {
 		// when:
@@ -125,5 +125,4 @@ public class TestObjectExtensionTest {
 		// then:
 		assertTrue(by.toString().contains("//a[@id='btn-make-appointment']"))
 	}
-
 }
