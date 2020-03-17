@@ -9,9 +9,10 @@ import com.kms.katalon.core.testobject.TestObject
 import groovy.json.JsonOutput
 
 /**
- * Utility methods for Kataon's TestObject
- * - converting TestObject to JSON
- * - converting TestObject to Selenium By object
+ * TestObjectExtention.apply() extends Katalon's TestObject.
+ * TestObject will be added with a few methods which
+ * - coverts it to a JSON String
+ * - convers it to a By object of WebDriver
  *
  * @author kazurayam
  */
@@ -45,9 +46,9 @@ class TestObjectExtension {
 	}
 
 	/**
-	 * Convert a TestObject object into a String in JSON format.
-	 * Both of Active properties and Non-active properties of TestObject are printed.
-	 * 
+	 * make a String representation of this TestObject instance
+     * in JSON format. All properties are rendered.
+	 *
 	 * @param testObject
 	 * @return JSON string. e.g.
 	 * <pre>
@@ -62,8 +63,8 @@ class TestObjectExtension {
 	}
 
 	/**
-	 * Convert a TestObject object into a String in JSON format with pretty indentation.
-	 * 
+	 * make a String representation in pretty-printed JSON format.
+	 *
 	 * @param testObject
 	 * @return JSON string. e.g.
 	 * <pre>
@@ -84,7 +85,7 @@ class TestObjectExtension {
 	}
 
 	/**
-	 * convert an instance of Katalon's TestObject into an instance of Selenium's By class.
+	 * create a new instance of Selenium By class out of Katalon TestObjec.
 	 *
 	 * @param testObject
 	 * @return

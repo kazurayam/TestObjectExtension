@@ -5,7 +5,7 @@ This is a small [Katalon Studio](https://www.katalon.com/) project for demonstra
 You can download the zip from the [Releases](https://github.com/kazurayam/TestObjectExtension/releases) page
 and open it with Katalon Studio on your PC.
 
-This project was developed using v7.2.1.
+This project was developed using Katalon Studio v7.2.1.
 
 # Problem to solve
 
@@ -13,23 +13,24 @@ Once I had a dicusssion in the Katalon Forum where I hacked Katalon Studio conce
 
 - [Cannot find elements when XPath expression is null](https://forum.katalon.com/t/cannot-find-elements-when-xpath-expression-is-null/13840)
 
-In the end it was found that Katalon Studio v5.7.1 had a small bug; and later the problem was fixed.
+In the end a small bug was found in Katalon Studio v5.7.1, which was fixed later.
 
-In the research I had to look at the internal of `com.kms.katalon.core.testobject.TestObject` class.
+Then I wanted to look at the internal of `com.kms.katalon.core.testobject.TestObject` object.
 I needed to debug-print every details of a `TestObject` instance.
 I needed to see all properties (name-value pairs).
 I wanted to pretty-print a `TestObject` in JSON format.
 I wanted to make it as easy as possible to print a `TestOject` in JSON.
 
-Also I remembered that quite often I need to convert a Katalon's `TestObject` into Selenium WebDriver's `By` object. 
+Also I remembered that quite often I need to convert a Katalon's `TestObject` into Selenium WebDriver's `By` object.
 I wanted to make it as easy as possible to create a `By` object out of a `TestObject`.
 
 # Solution proposed
 
-I developed a utility class `com.kazurayam.ks.testobject.TestObjectExntion`. 
+I developed a utility class `com.kazurayam.ks.testobject.TestObjectExntion`.
+With it a test case script can extend the `com.kms.katalon.core.testobject.TestObject` class to add a few custom methods runtime.
 It employs [Groovy's Runtime Metaprogramming](https://groovy-lang.org/metaprogramming.html) technique.
-With it a test case script can extend the `com.kms.katalon.core.testobject.TestObject` class
-to have a few custom methods runtime.
+
+
 
 # Description
 
@@ -37,28 +38,25 @@ to have a few custom methods runtime.
 
 1. Open this project with your local Katalon Studio
 2. Open `Test Cases/main/demo1`
-3. Just run `demo1`
+3. Run the `demo1`
 
-## How the demo code looks like
 
-See the source of `TestObjectExteion` keyword located [here](./Keywords/com/kazurayam/ks/testobject/)
 
-Here I would dectate the code fragments as it goes
+## How the demo1 code looks like
 
-You need to import the class:
-```
-import com.kazurayam.ks.testobject.TestObjectExtension
-```
+Here I would dectate the [Test Cases/main/demo1](Scripts/main/demo1/Script1584390825818.groovy) as it goes
+
 
 ### apply()
 
-We extends TestObject class by calling `TestObjectExteion#apply()` method:
+By invoking `TestObjectExteion#apply()` method, we can add a few methods to `TestObject` class:
 ```
 CustomKeywords."com.kazurayam.ks.testobject.TestObjectExtension.apply"()
 ```
 
 Or simply you can write:
 ```
+import com.kazurayam.ks.testobject.TestObjectExtension
 TestObjectExtension.apply()
 ```
 
@@ -82,7 +80,7 @@ I am afraid, this output is not useful for hacking purposes.
 
 ### toJson()
 
-By invoking `TestObjectExtension.apply()` the `TestObject` class now implements `toJson()` method: 
+By invoking `TestObjectExtension.apply()` the `TestObject` class now implements `toJson()` method:
 ```
 WebUI.comment("#toJson()\n" + tObj.toJson())
 ```
@@ -151,7 +149,7 @@ This emits this output:
     "useRelativeImagePath": false,
     "parentObject": null,
     "xpaths": [
-        
+
     ],
     "activeProperties": [
         {
@@ -168,7 +166,7 @@ This emits this output:
         }
     ],
     "activeXpaths": [
-        
+
     ]
 }
 ```
@@ -184,13 +182,13 @@ By by = tObj.toBy()
 
 Simple is the best.
 
+## Source of `TestObjectExtension` class
+
+See the source of `TestObjectExtension` keyword located [here](./Keywords/com/kazurayam/ks/testobject/)
+
 ## How to use TestObjectExtension in your own project
 
 In the [Releases](https://github.com/kazurayam/TestObjectExtension/releases) page
 you can find jar file that contains the compiled class file of `TestObjectExtension`.
 You can download it and locate it into the `Drivers` directory of your own Katalon Studio project
 as described in the document [External Libraries](https://docs.katalon.com/katalon-studio/docs/external-libraries.html)
-
-
-
-
