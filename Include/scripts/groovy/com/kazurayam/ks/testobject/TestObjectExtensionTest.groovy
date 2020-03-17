@@ -125,4 +125,16 @@ public class TestObjectExtensionTest {
 		// then:
 		assertTrue(by.toString().contains("//a[@id='btn-make-appointment']"))
 	}
+	
+	@Test
+	void test_toBy_List() {
+		WebUI.comment("test_toBy_List")
+		List<TestObject> toList = new ArrayList<TestObject>()
+		toList.add(findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC'))
+		toList.add(findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_CSS'))
+		toList.add(findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_XPATH'))
+		List<By> byList = TestObjectExtension.toBy(toList)
+		//println byList
+		assertEquals(3, byList.size())
+	}
 }

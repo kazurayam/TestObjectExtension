@@ -47,7 +47,7 @@ class TestObjectExtension {
 
 	/**
 	 * make a String representation of this TestObject instance
-     * in JSON format. All properties are rendered.
+	 * in JSON format. All properties are rendered.
 	 *
 	 * @param testObject
 	 * @return JSON string. e.g.
@@ -106,6 +106,15 @@ class TestObjectExtension {
 			default :
 				throw new IllegalArgumentException("unable to convert to By: " + prettyPrint(testObject))
 		}
+	}
+	
+	@Keyword
+	static List<By> toBy(List<TestObject> testObjectList) {
+		List<By> list = new ArrayList<By>()
+		for (TestObject to : testObjectList) {
+			list.add(TestObjectExtension.toBy(to))
+		}
+		return list
 	}
 
 }
