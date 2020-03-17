@@ -80,7 +80,8 @@ I am afraid, this output is not useful for hacking purposes.
 
 ### toJson()
 
-By invoking `TestObjectExtension.apply()` the `TestObject` class now implements `toJson()` method:
+By invoking `TestObjectExtension.apply()` the `TestObject` class is now added with `toJson()` method:
+
 ```
 WebUI.comment("#toJson()\n" + tObj.toJson())
 ```
@@ -89,11 +90,11 @@ This emits this output:
 {"cachedWebElement":null,"objectId":"Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC","parentObjectShadowRoot":false,"properties":[{"active":true,"value":"a","condition":"EQUALS","name":"tag"},{"active":true,"value":"btn-make-appointment","condition":"EQUALS","name":"id"},{"active":false,"value":"./profile.php#login","condition":"EQUALS","name":"href"},{"active":false,"value":"btn btn-dark btn-lg","condition":"EQUALS","name":"class"},{"active":false,"value":"Make Appointment","condition":"EQUALS","name":"text"},{"active":false,"value":"id(\"btn-make-appointment\")","condition":"EQUALS","name":"xpath"}],"imagePath":null,"selectorMethod":"BASIC","selectorCollection":{"BASIC":"//a[@id = 'btn-make-appointment']"},"useRelativeImagePath":false,"parentObject":null,"xpaths":[],"activeProperties":[{"active":true,"value":"a","condition":"EQUALS","name":"tag"},{"active":true,"value":"btn-make-appointment","condition":"EQUALS","name":"id"}],"activeXpaths":[]}
 ```
 
-A long long line of text in JSON format. It's ugly, not very useful.
+A single line of text in JSON format. It's too long. I can not comprehend it at a glance. It's not very helpful.
 
 ### prettyPrint()
 
-The `TestObject` class now implements `prettyPrint()` method:
+The `TestObject` class also added with `prettyPrint()` method:
 ```
 WebUI.comment("#prettyPrint()\n" + tObj.prettyPrint())
 ```
@@ -170,13 +171,15 @@ This emits this output:
     ]
 }
 ```
-Ok, this is what I wanted to see.
+OK. Finally, this is what I wanted to see.
 
 ### toBy()
 
-The `TestObject` class now also has `toBy()` method with which you can convert
-TestObject into a WebDriver's By object.
+The `TestObject` class is also added with `toBy()` method.  You can create a WebDriver's `By` object with the same locator as TestObject.
+
 ```
+import org.openqa.selenium.By
+...
 By by = tObj.toBy()
 ```
 
