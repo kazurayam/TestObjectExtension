@@ -1,4 +1,4 @@
-TestObject Extension for Katalon Studio
+TestObject Extension
 ====
 
 This is a small [Katalon Studio](https://www.katalon.com/) project for demonstration purpose.
