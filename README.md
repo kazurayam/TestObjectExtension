@@ -26,7 +26,7 @@ I wanted to make it as easy as possible to create a `By` object out of a `TestOb
 
 # Solution proposed
 
-I developed a utility class `com.kazurayam.ks.testobject.TestObjectExntion`.
+I developed a utility class `com.kazurayam.ks.testobject.TestObjectExtension`.
 With it a test case script can extend the `com.kms.katalon.core.testobject.TestObject` class to add a few custom methods runtime.
 It employs [Groovy's Runtime Metaprogramming](https://groovy-lang.org/metaprogramming.html) technique.
 
@@ -188,6 +188,10 @@ Simple is the best.
 ## Source of `TestObjectExtension` class
 
 See the source of `TestObjectExtension` keyword located [here](./Keywords/com/kazurayam/ks/testobject/)
+
+## API documentation
+
+Groovydoc of TestObjectExtension is [here](./docs/api/index.html)
 
 ## How to use TestObjectExtension in your own project
 

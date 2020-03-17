@@ -28,3 +28,13 @@ WebUI.comment("#prettyPrint()\n" + tObj.prettyPrint())
 By by = tObj.toBy()
 WebUI.comment("#toBy()\n" + by.toString())
 assert by.toString().contains("//a[@id = 'btn-make-appointment']")
+
+// You can convert a List<TestObject> into a List<By>
+List<TestObject> listTO = new ArrayList<TestObject>()
+listTO.add(findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_BASIC'))
+listTO.add(findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_CSS'))
+listTO.add(findTestObject('Object Repository/Page_CURA Healthcare Service/a_Make Appointment_XPATH'))
+List<By> listBY = TestObjectExtension.toBy(listTO)
+assert listBY != null
+assert listBY.size() == 3 
+
