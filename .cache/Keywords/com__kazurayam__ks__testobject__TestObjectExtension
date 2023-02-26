@@ -1,0 +1,83 @@
+{
+  "keywordFileContentHash": "350791254D18C0D8041611C9F26E05D6",
+  "keywordClasses": [
+    {
+      "name": "com.kazurayam.ks.testobject.TestObjectExtension",
+      "keywordMethods": [
+        {
+          "name": "apply",
+          "parameters": [],
+          "javadoc": ""
+        },
+        {
+          "name": "toJson",
+          "parameters": [
+            {
+              "name": "testObject",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "com.kms.katalon.core.testobject.TestObject",
+                "unresolvedClassName": "TestObject",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": "/**\n\t * make a String representation of this TestObject instance\n\t * in JSON format. All properties are rendered.\n\t *\n\t * @param testObject\n\t * @return JSON string. e.g.\n\t * \u003cpre\u003e\n\t * {\"objectId\": \"Page_CURA Healthcare Service/a_Make Appointment\",\"selectorMethod\": \"BASIC\",\"selectorCollection\": {\"BASIC\": \"//a[@id\u003d\u0027btn\u0027]\"}}\n\t * \u003c/pre\u003e\n\t */"
+        },
+        {
+          "name": "toBy",
+          "parameters": [
+            {
+              "name": "testObject",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "com.kms.katalon.core.testobject.TestObject",
+                "unresolvedClassName": "TestObject",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": "/**\n\t * create a new instance of Selenium By class out of Katalon TestObjec.\n\t *\n\t * @param testObject\n\t * @return\n\t */"
+        },
+        {
+          "name": "toBy",
+          "parameters": [
+            {
+              "name": "testObjectList",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.util.List",
+                "unresolvedClassName": "List",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [
+                  {
+                    "fullClassName": "com.kms.katalon.core.testobject.TestObject",
+                    "unresolvedClassName": "TestObject",
+                    "isArray": false,
+                    "isGnericsPlaceHolder": false,
+                    "hasImmutableClassName": false,
+                    "genericsTypes": [],
+                    "errorOnParsing": false
+                  }
+                ],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        }
+      ]
+    }
+  ],
+  "javadocParsed": true
+}
