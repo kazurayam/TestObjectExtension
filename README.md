@@ -185,6 +185,25 @@ By by = tObj.toBy()
 
 Simple is the best.
 
+### TestObjectExtenstion.create(By by)
+
+You can create an instance of TestObject from a By object.
+
+```
+  @Test
+	void test_create_cssSelector() {
+		TestObject to = TestObjectExtension.create(By.cssSelector("img#apple"))
+		assertEquals("TestObject - 'By.cssSelector: img#apple'", to.toString())
+	}
+
+	@Test
+	void test_create_xpath() {
+		TestObject to = TestObjectExtension.create(By.xpath("//img[@id='apple']"))
+		assertEquals("TestObject - 'By.xpath: //img[@id='apple']'", to.toString())
+	}
+```
+
+
 ## Source of `TestObjectExtension` class
 
 See the source of `TestObjectExtension` keyword located [here](./Keywords/com/kazurayam/ks/testobject/)

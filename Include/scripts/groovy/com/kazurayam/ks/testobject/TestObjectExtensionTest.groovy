@@ -125,7 +125,7 @@ public class TestObjectExtensionTest {
 		// then:
 		assertTrue(by.toString().contains("//a[@id='btn-make-appointment']"))
 	}
-	
+
 	@Test
 	void test_toBy_List() {
 		WebUI.comment("test_toBy_List")
@@ -136,5 +136,17 @@ public class TestObjectExtensionTest {
 		List<By> byList = TestObjectExtension.toBy(toList)
 		//println byList
 		assertEquals(3, byList.size())
+	}
+
+	@Test
+	void test_create_cssSelector() {
+		TestObject to = TestObjectExtension.create(By.cssSelector("img#apple"))
+		assertEquals("TestObject - 'By.cssSelector: img#apple'", to.toString())
+	}
+
+	@Test
+	void test_create_xpath() {
+		TestObject to = TestObjectExtension.create(By.xpath("//img[@id='apple']"))
+		assertEquals("TestObject - 'By.xpath: //img[@id='apple']'", to.toString())
 	}
 }

@@ -5,6 +5,7 @@ import org.openqa.selenium.By
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.testobject.SelectorMethod
 import com.kms.katalon.core.testobject.TestObject
+import com.kms.katalon.core.testobject.ConditionType
 
 import groovy.json.JsonOutput
 
@@ -23,24 +24,24 @@ class TestObjectExtension {
 		TestObject.metaClass.invokeMethod = { String name, args ->
 			switch (name) {
 				case "toJson" :
-					return toJson(delegate)
-					break
+				return toJson(delegate)
+				break
 				case "prettyPrint" :
-					return prettyPrint(delegate)
-					break
+				return prettyPrint(delegate)
+				break
 				case "toBy" :
-					return toBy(delegate)
-					break
+				return toBy(delegate)
+				break
 				default :
 				// just do what TestObject is designed to do
-					def result
-					try {
-						result = delegate.metaClass.getMetaMethod(name, args).invoke(delegate, args)
-					} catch (Exception e) {
-						System.err.println("call to method $name raised an Exception")
-						e.printStackTrace()
-					}
-					return result
+				def result
+				try {
+					result = delegate.metaClass.getMetaMethod(name, args).invoke(delegate, args)
+				} catch (Exception e) {
+					System.err.println("call to method $name raised an Exception")
+					e.printStackTrace()
+				}
+				return result
 			}
 		}
 	}
@@ -107,7 +108,7 @@ class TestObjectExtension {
 				throw new IllegalArgumentException("unable to convert to By: " + prettyPrint(testObject))
 		}
 	}
-	
+
 	@Keyword
 	static List<By> toBy(List<TestObject> testObjectList) {
 		List<By> list = new ArrayList<By>()
@@ -117,4 +118,17 @@ class TestObjectExtension {
 		return list
 	}
 
+	@Keyword
+	static TestObject create(By by) {
+		String s = by.toString()
+		TestObject tObj = new TestObject(s)
+		if (by instanceof By.ByCssSelector) {
+			tObj.addProperty("cssSelector", ConditionType.EQUALS, s.substring("By.id:".length()).trim())
+		} else if (by instanceof By.ByXPath) {
+			tObj.addProperty("cssSelector", ConditionType.EQUALS, s.substring("By.xpath:".length()).trim())
+		} else {
+			throw new IllegalArgumentException("unsupported type of By: " + by.getClass().getName())
+		}
+		return tObj
+	}
 }
