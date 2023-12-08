@@ -10,6 +10,7 @@ import org.junit.runners.JUnit4
 import org.openqa.selenium.By
 
 import com.kms.katalon.core.testobject.TestObject
+import com.kms.katalon.core.testobject.SelectorMethod
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 import groovy.json.JsonOutput
@@ -140,13 +141,19 @@ public class TestObjectExtensionTest {
 
 	@Test
 	void test_create_cssSelector() {
-		TestObject to = TestObjectExtension.create(By.cssSelector("img#apple"))
-		assertEquals("TestObject - 'By.cssSelector: img#apple'", to.toString())
+		TestObject tObj = TestObjectExtension.create(By.cssSelector("img#apple"))
+		println "[test_create_cssSelector] " + TestObjectExtension.prettyPrint(tObj)
+		assertEquals("TestObject - 'By.cssSelector: img#apple'", tObj.toString())
+		assertEquals(SelectorMethod.CSS, tObj.getSelectorMethod())
+		assertEquals("img#apple", tObj.getSelectorCollection().get(SelectorMethod.CSS))
 	}
 
 	@Test
 	void test_create_xpath() {
-		TestObject to = TestObjectExtension.create(By.xpath("//img[@id='apple']"))
-		assertEquals("TestObject - 'By.xpath: //img[@id='apple']'", to.toString())
+		TestObject tObj = TestObjectExtension.create(By.xpath("//img[@id='apple']"))
+		println "[test_create_xpath] " + TestObjectExtension.prettyPrint(tObj)
+		assertEquals("TestObject - 'By.xpath: //img[@id='apple']'", tObj.toString())
+		assertEquals(SelectorMethod.XPATH, tObj.getSelectorMethod())
+		assertEquals("//img[@id='apple']", tObj.getSelectorCollection().get(SelectorMethod.XPATH))
 	}
 }

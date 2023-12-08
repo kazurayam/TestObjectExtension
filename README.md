@@ -190,7 +190,7 @@ Simple is the best.
 You can create an instance of TestObject from a By object.
 
 ```
-  @Test
+	@Test
 	void test_create_cssSelector() {
 		TestObject to = TestObjectExtension.create(By.cssSelector("img#apple"))
 		assertEquals("TestObject - 'By.cssSelector: img#apple'", to.toString())

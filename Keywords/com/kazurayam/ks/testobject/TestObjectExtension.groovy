@@ -123,9 +123,11 @@ class TestObjectExtension {
 		String s = by.toString()
 		TestObject tObj = new TestObject(s)
 		if (by instanceof By.ByCssSelector) {
-			tObj.addProperty("cssSelector", ConditionType.EQUALS, s.substring("By.id:".length()).trim())
+			tObj.setSelectorMethod(SelectorMethod.CSS)
+			tObj.setSelectorValue(SelectorMethod.CSS, s.substring("By.cssSelector:".length()).trim())
 		} else if (by instanceof By.ByXPath) {
-			tObj.addProperty("cssSelector", ConditionType.EQUALS, s.substring("By.xpath:".length()).trim())
+			tObj.setSelectorMethod(SelectorMethod.XPATH)
+			tObj.setSelectorValue(SelectorMethod.XPATH, s.substring("By.xpath:".length()).trim())
 		} else {
 			throw new IllegalArgumentException("unsupported type of By: " + by.getClass().getName())
 		}
