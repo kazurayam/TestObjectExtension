@@ -5,40 +5,42 @@ plugins {
 }
 
 group = 'com.kazurayam'
-archivesBaseName = "TestObjectExtension"
-version = '0.1.3'
+version = '0.1.4'
 
 ext {
   isReleaseVersion = ! version.endsWith("SNAPSHOT")
-  groovyVersion   = '2.4.7'
-}
-
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
-def defaultEncoding = 'UTF-8'
-tasks.withType(AbstractCompile).each {
-  it.options.encoding = defaultEncoding
-}
-tasks.withType(GroovyCompile).each {
-  it.options.encoding = defaultEncoding
+  KATALON_STUDIO_INSTALLATION_DIR = '/Applications/Katalon Studio.app/Contents/Eclipse'
 }
 
 configurations {
-    generateDocs
+  generateDocs
 }
 
 repositories {
-    mavenCentral()
-    mavenLocal()
+  mavenCentral()
+  mavenLocal()
 }
 
+FileCollection bundledJars = layout.files(
+    "${KATALON_STUDIO_INSTALLATION_DIR}/plugins/com.kms.katalon.core.webui_1.0.0.202410300525.jar",
+    "${KATALON_STUDIO_INSTALLATION_DIR}/plugins/com.kms.katalon.core_1.0.0.202410300525.jar"
+    )
+
 dependencies {
-  compileOnly "org.codehaus.groovy:groovy-all:${groovyVersion}"
-  compileOnly fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/plugins", include: ['*.jar'])
-  compileOnly fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib", include: ['*.jar'])
-  generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
+  compileOnly("org.codehaus.groovy:groovy-all:3.0.17")
+  compileOnly("org.seleniumhq.selenium:selenium-java:4.22.0")
+  compileOnly bundledJars
 }
+
+tasks.register('listJars') {
+    doLast {
+        FileCollection fileCollection = fileTree("${KATALON_STUDIO_INSTALLATION_DIR}/configuration/resources/lib") { include '*.jar' }
+        fileCollection.sort().each { file ->
+            println file
+        }
+    }
+}
+
 
 sourceSets {
   main {
@@ -52,6 +54,12 @@ sourceSets {
       srcDirs = ['Include/scripts/groovy']
     }
   }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 task groovydoc(type: Groovydoc, overwrite:true) {

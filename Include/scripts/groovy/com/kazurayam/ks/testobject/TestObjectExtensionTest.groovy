@@ -162,6 +162,7 @@ public class TestObjectExtensionTest {
 		TestObject tObj = findTestObject('Object Repository/Page_CURA Healthcare Service/Page_Login/txt_Password')
 		println "[test_reproducing_issue5] ${TestObjectExtension.prettyPrint(tObj)}"
 		By by = TestObjectExtension.toBy(tObj)
-		assertNotNull(by, 'failed to convert a TestObect to an instace of By')
+		println "[test_reproducing_issue5] ${by.toString()}"
+		assertEquals('By.id: txt-password', by.toString())
 	}
 }

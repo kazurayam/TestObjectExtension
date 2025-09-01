@@ -5,6 +5,7 @@ import org.openqa.selenium.By
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.testobject.SelectorMethod
 import com.kms.katalon.core.testobject.TestObject
+import com.kms.katalon.core.testobject.TestObjectProperty
 import com.kms.katalon.core.testobject.ConditionType
 
 import groovy.json.JsonOutput
@@ -24,24 +25,24 @@ class TestObjectExtension {
 		TestObject.metaClass.invokeMethod = { String name, args ->
 			switch (name) {
 				case "toJson" :
-				return toJson(delegate)
-				break
+					return toJson(delegate)
+					break
 				case "prettyPrint" :
-				return prettyPrint(delegate)
-				break
+					return prettyPrint(delegate)
+					break
 				case "toBy" :
-				return toBy(delegate)
-				break
+					return toBy(delegate)
+					break
 				default :
 				// just do what TestObject is designed to do
-				def result
-				try {
-					result = delegate.metaClass.getMetaMethod(name, args).invoke(delegate, args)
-				} catch (Exception e) {
-					System.err.println("call to method $name raised an Exception")
-					e.printStackTrace()
-				}
-				return result
+					def result
+					try {
+						result = delegate.metaClass.getMetaMethod(name, args).invoke(delegate, args)
+					} catch (Exception e) {
+						System.err.println("call to method $name raised an Exception")
+						e.printStackTrace()
+					}
+					return result
 			}
 		}
 	}
@@ -96,7 +97,26 @@ class TestObjectExtension {
 		Objects.requireNonNull(testObject, "testObject must not be null")
 		switch (testObject.selectorMethod) {
 			case 'BASIC' :
-				return By.xpath(testObject.getSelectorCollection()[SelectorMethod.BASIC])
+			    if (testObject.getSelectorCollection().size() > 0) {
+					return By.xpath(testObject.getSelectorCollection()[SelectorMethod.BASIC])
+			    } else {
+					if (testObject.getActiveProperties().size() > 0) {
+						TestObjectProperty top = testObject.getActiveProperties()[0]
+						switch (top.getName()) {
+							case 'id':
+								return By.id(top.getValue())
+								break
+							case 'name':
+								return By.name(top.getValue())
+								break
+							default:
+								throw new IllegalStateException("BASIC with empty selectorCollection " + 
+									"with non-empty activeProperies of unknown name other than id, name")	
+						}
+					} else {
+						throw new IllegalStateException("BASIC with empty selectorCollection & with empty activeProperites")
+					}
+				}
 				break
 			case 'CSS' :
 				return By.cssSelector(testObject.getSelectorCollection()[SelectorMethod.CSS])
