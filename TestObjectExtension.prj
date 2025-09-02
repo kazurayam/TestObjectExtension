@@ -4,7 +4,10 @@
    <name>TestObjectExtension</name>
    <tag></tag>
    <UUID>c82fb3ce-dd1b-4c30-a0bc-a1fca44ef29f</UUID>
+   <freeLicense>true</freeLicense>
    <migratedVersion>5.9.0</migratedVersion>
+   <modifiedEdition>FREE</modifiedEdition>
+   <modifiedVersion>10.0.0</modifiedVersion>
    <pageLoadTimeout>0</pageLoadTimeout>
    <projectFileLocation>/Users/kazuakiurayama/katalon-workspace/TestObjectExtension/TestObjectExtension.prj</projectFileLocation>
    <sourceContent>
