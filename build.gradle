@@ -15,6 +15,7 @@ ext {
     groovyVersion = '3.0.17'
     seleniumVersion = '4.22.0'
     KATALON_STUDIO_INSTALLATION_DIR = '/Applications/Katalon Studio.app/Contents/Eclipse'
+    GitHubUserName = 'kazurayam'
 }
 
 FileCollection katalonJars = layout.files(
@@ -74,7 +75,7 @@ mavenPublishing {
         name.set(project.rootProject.name)
         description = 'A Katalon Studio plugin that extends the TestObject class with new methods'
         inceptionYear.set('2020')
-        url.set('https://kazurayam.github.io/TestObjectExtention/')
+        url.set("https://${GitHubUserName}.github.io/TestObjectExtention/")
         licenses {
             license {
                 name = 'The Apache License, Version 2.0'
@@ -83,15 +84,15 @@ mavenPublishing {
         }
         developers {
             developer {
-                id.set('kazurayam')
+                id.set("${GitHubUserName}")
                 name.set('URAYAMA,kazuaki')
-                email.set('kazuaki.urayama@gmail.com')
+                url.set("https://github.com/${GitHubUserName}")
             }
         }
         scm {
-            connection = "scm:git:https://github.com/kazurayam/${project.rootProject.name}.git"
-            developerConnection = "scm:git:git@github.com:kazurayam/${project.rootProject.name}.git"
-            url = "https://github.com/kazurayam/${project.rootProject.name}"
+            connection = "scm:git:https://github.com/${GitHubUserName}/${project.rootProject.name}.git"
+            developerConnection = "scm:git:git@github.com:${GitHubUserName}/${project.rootProject.name}.git"
+            url = "https://github.com/${GitHubUserName}/${project.rootProject.name}"
         }
     }
 }
@@ -109,7 +110,7 @@ task groovydoc(type: Groovydoc, overwrite:true) {
     source = sourceSets.main.groovy
     classpath = configurations.generateDocs
     groovyClasspath = configurations.generateDocs
-    include 'com/kazurayam/ks/*'
+    include 'com/kazurayam/ks/**/*'
     exclude '**/*Test.groovy'
 }
 task publishGroovydoc(type: Copy) {
